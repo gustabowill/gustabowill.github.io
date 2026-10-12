@@ -1,0 +1,19 @@
+---
+import AboutContent from "@/components/AboutContent.astro";
+import PageLayout from "@/layouts/Base.astro";
+import { getEntry } from "astro:content";
+import { siteConfig } from "@/site-config";
+
+const entry = await getEntry("page", "about");
+if (!entry) throw new Error("Missing content/page/about.md");
+const authorName = siteConfig.profile?.name ?? siteConfig.author;
+
+const meta = {
+	description: entry.data.description ?? `${authorName} — about me.`,
+	title: entry.data.title,
+};
+---
+
+<PageLayout meta={meta}>
+	<AboutContent />
+</PageLayout>

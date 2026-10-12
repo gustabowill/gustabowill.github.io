@@ -1,0 +1,91 @@
+---
+import { getAllTalks } from "@/data/talk";
+import PageLayout from "@/layouts/Base.astro";
+import { formatStampDate } from "@/utils/date";
+import { withBase } from "@/utils/path";
+import { Schema } from "astro-seo-schema";
+
+const talks = await getAllTalks();
+
+const siteUrl = (path: string) => new URL(path, Astro.site).toString();
+---
+
+<Schema
+	item={{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{
+				"@type": "ListItem",
+				position: 1,
+				name: "Home",
+				item: siteUrl("/"),
+			},
+			{
+				"@type": "ListItem",
+				position: 2,
+				name: "Talks",
+				item: siteUrl("/talks"),
+			},
+		],
+	}}
+/>
+
+<PageLayout meta={{ title: "Talks" }}>
+	<section class="work" aria-labelledby="work-label">
+		<div class="section-label" id="work-label">Talks</div>
+		<p class="intro">
+			Talks I've given. Some are in Portuguese 😉
+		</p>
+		<ul class="work-list">
+			{
+				talks.map(({ data, id }) => (
+					<li>
+						<a data-astro-prefetch href={withBase(`/talks/${id}/`)}>
+							<div class="head">
+								<span class="name">{data.title}</span>
+								<span class="stack">
+									{data.event} · {formatStampDate(data.date)}
+								</span>
+								{data.badge && <span class="badge">{data.badge}</span>}
+							</div>
+							<p>{data.description}</p>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</PageLayout>
+
+<style>
+	.work {
+		margin-bottom: 88px;
+	}
+	.intro {
+		font-family: var(--font-serif);
+		font-size: 17.5px;
+		line-height: 1.7;
+		color: hsl(var(--theme-text));
+		margin: 0 0 36px;
+		max-width: 60ch;
+		text-wrap: pretty;
+		text-align: justify;
+		hyphens: auto;
+	}
+
+	@media (max-width: 720px) {
+		.intro {
+			font-size: 17px;
+			margin-bottom: 28px;
+		}
+	}
+	@media (max-width: 420px) {
+		.work {
+			margin-bottom: 56px;
+		}
+		.intro {
+			font-size: 16.5px;
+		}
+	}
+</style>
