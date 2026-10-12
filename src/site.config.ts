@@ -29,12 +29,12 @@ export const siteConfig: SiteConfig = {
 		avatar: "/avatar.jpeg",
 	},
 	// Uncomment & fill in to enable Giscus comments on every post.
-	// comments: {
-	// 	repo: "your-handle/your-repo",
-	// 	repoId: "...",
-	// 	category: "General",
-	// 	categoryId: "...",
-	// },
+	comments: {
+		repo: "gustabowill/gustabowill.github.io",
+		repoId: "R_kgDOUmZytQ",
+		category: "Announcements",
+		categoryId: "DIC_kwDOUmZytc4DIGmt",
+	},
 	// Uncomment to enable analytics. Both providers load via Partytown.
 	// analytics: {
 	// 	googleAnalyticsId: "G-XXXXXXX",
